@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "671897173859",
+    "firebase_url": "https://swapi-ed707.firebaseio.com",
+    "project_id": "swapi-ed707",
+    "storage_bucket": "swapi-ed707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671897173859:android:c4bd2b82209daa3cc29d56",
+        "android_client_info": {
+          "package_name": "com.fcrizul.starwars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671897173859-5ee1o3lsa49h96jrrq7m0thd3157t61v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8R_smvc-gDyVIirTcKgecdow7Yp7A57Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671897173859-5ee1o3lsa49h96jrrq7m0thd3157t61v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

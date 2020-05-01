@@ -1,0 +1,67 @@
+import React from 'react'
+import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import auth from '@react-native-firebase/auth';
+import colors from '../theme/Colors';
+
+export default class LoginScreen extends React.Component {
+  state = { email: '', password: '', errorMessage: null }
+  handleLogin = () => {
+    auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate('People'))
+      .catch(error => this.setState({ errorMessage: error.message }))
+  }
+  static navigationOptions = {
+    headerShown : false
+}
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>Login</Text>
+        {this.state.errorMessage &&
+          <Text style={{ color: 'red' }}>
+            {this.state.errorMessage}
+          </Text>}
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize="none"
+          placeholder="Email"
+          onChangeText={email => this.setState({ email })}
+          value={this.state.email}
+        />
+        <TextInput
+          secureTextEntry
+          style={styles.textInput}
+          autoCapitalize="none"
+          placeholder="Password"
+          onChangeText={password => this.setState({ password })}
+          value={this.state.password}
+        />
+        <Button title="Login" onPress={this.handleLogin} />
+        <Button
+          title="Don't have an account? Sign Up"
+          onPress={() => this.props.navigation.navigate('SignUp')}
+        />
+      </View>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.backgroundColor
+  },
+  textInput: {
+    height: 40,
+    width: '90%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginTop: 8
+  },
+  text: {
+    color: colors.fontColor,
+  }
+})
