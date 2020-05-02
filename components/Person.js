@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, Image, StyleSheet, Platform, TouchableOpacity } from 'react-native'
-//import { Ionicons } from '@expo/vector-icons'
-//import { ListItem } from 'react-native-elements'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {isFavorite} from '../api/database'
 import colors from '../theme/Colors'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default class Person extends Component {
   state = {
@@ -17,37 +16,25 @@ export default class Person extends Component {
       });
     })
   }
+
   render() {
     const { datos: { name, gender, birth_year, url }, onLike } = this.props
     this.state.url = url;
-    //const nombreIconoCorazon = `${Platform.OS === 'ios' ? 'ios-heart' : 'md-heart'}${favorite ? '' : '-outline'}`
     
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>{gender.slice(0,1).toUpperCase() + gender.slice(1, gender.length) + " | Birth date: " + birth_year}</Text>
+      <View style={{flexDirection:"row"}}>
+        <View style={styles.container}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.subtitle}>{gender.slice(0,1).toUpperCase() + gender.slice(1, gender.length) + " | Birth date: " + birth_year}</Text>
+        </View>
         {(this.state.favorite)?
-          <Text style={styles.title}>FAV</Text>
-        : null}
-        
+          <MaterialIcons
+                name="star"
+                style={{ marginRight: 10, color: '#ffff00',textAlign: 'right' , flex:1, paddingTop:16}}
+                size={24}
+              />
+          : null}
       </View>
-      /*
-      <ListItem
-        key={url}
-        //leftAvatar={{ source: { uri: l.avatar_url } }}
-        title={name}
-        subtitle={gender.slice(0,1).toUpperCase() + gender.slice(1, gender.length) + " | Birth date: " + birth_year}
-        bottomDivider
-        chevron
-        style={{
-          backgroundColor: colors.backgroundColor,
-          paddingLeft: 4,
-          paddingTop: 6,
-          paddingBottom: 6,
-          fontFamily: 'System',
-        }}
-      />
-      */
     )
   }
 }
@@ -55,7 +42,8 @@ export default class Person extends Component {
 const styles = new StyleSheet.create({
   container : {
     padding: 8,
-    paddingStart: 16
+    paddingStart: 16,
+    flex:1
   },
   title : {
     fontWeight: "600",

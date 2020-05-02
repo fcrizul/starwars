@@ -8,10 +8,11 @@ import colors from './theme/Colors';
 import MainScreen from './screens/Main';
 import LoginScreen from './screens/Login';
 import SignUpScreen from './screens/SignUp';
+import DetailsScreen from './screens/Details';
 
 const RootStack = createStackNavigator(
   {
-    //Details: DetailsScreen,
+    Details: DetailsScreen,
 
     Main : MainScreen,
     Login: LoginScreen,
@@ -33,8 +34,9 @@ const RootStack = createStackNavigator(
       },
       headerTitleStyle: {
           fontWeight: "500",
-          color: '#ffffff'
-      }
+          //color: '#ffffff'
+      },
+      headerTintColor: '#ffffff'
     }
   }
 );

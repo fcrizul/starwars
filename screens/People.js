@@ -23,7 +23,6 @@ export default class PeopleScreen extends React.Component {
     this.props.navigation.setParams({ filterAll: this.filterAll })
     this.props.navigation.setParams({ filterFav: this.filterFav })
 
-    this.props.navigation.setParams({ getFilterIsAll: this.getFilterIsAll })
     getPeople().then(response => this.setState({ 
       people :  response.results,
       next: response.next,
@@ -46,7 +45,9 @@ export default class PeopleScreen extends React.Component {
   }
 
   handleOnPress = (url) => {
-    alert("clicked")
+    this.props.navigation.navigate('Details', {
+      url: url,
+    });
   }
 
   renderItem = ({ item }) => <TouchableHighlight  onPress={() => this.handleOnPress(item.url)}><Person datos={item} /></TouchableHighlight>
