@@ -7,7 +7,7 @@ export default class LoginScreen extends React.Component {
   state = { email: '', password: '', errorMessage: null }
   handleLogin = () => {
     auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('People'))
       .catch(error => this.setState({ errorMessage: error.message }))
   }
