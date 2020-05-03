@@ -13,7 +13,6 @@ import DetailsScreen from './screens/Details';
 const RootStack = createStackNavigator(
   {
     Details: DetailsScreen,
-
     Main : MainScreen,
     Login: LoginScreen,
     SignUp : SignUpScreen,
@@ -42,11 +41,17 @@ const RootStack = createStackNavigator(
 );
 
 const AppContainer = createAppContainer(RootStack);
-
+/*
 export default class App extends React.Component {
   render() {
     return <AppContainer />;
   }
+}
+*/
+export default function App() {
+  return (
+    <AppContainer />
+  );
 }
 
 

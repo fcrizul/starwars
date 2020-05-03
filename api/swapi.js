@@ -5,10 +5,10 @@ const API_URL = 'http://swapi.dev/api/people'
 export const getPeople = async (isFav, url) => {
   if (url == null)
     url = API_URL
-  console.log(url)
+  //console.log(url)
 
   var fav = []
-  console.log(isFav)
+  //console.log(isFav)
   if (isFav) {
     fav = await getFavorites()
   }

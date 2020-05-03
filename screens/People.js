@@ -5,6 +5,7 @@ import { getPeople } from '../api/swapi'
 import colors from '../theme/Colors'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Menu, { MenuItem } from 'react-native-material-menu';
+import auth from '@react-native-firebase/auth';
 
 const UIManager = NativeModules.UIManager;
 
@@ -21,6 +22,7 @@ export default class PeopleScreen extends React.Component {
     this.props.navigation.setParams({ setMenuRef: this.setMenuRef })
     this.props.navigation.setParams({ hideMenu: this.hideMenu })
     this.props.navigation.setParams({ showMenu: this.showMenu })
+    this.props.navigation.setParams({ logout: this.logout })
     this.props.navigation.setParams({ filterAll: this.filterAll })
     this.props.navigation.setParams({ filterFav: this.filterFav })
 
@@ -87,23 +89,35 @@ export default class PeopleScreen extends React.Component {
     this._menu.show();
   };
 
+  logout = () => {
+    auth().signOut().then(() =>
+      this.props.navigation.replace('Login')
+    );
+  };
+
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
     return {
       headerRight: () => (
-        <View style={{ marginRight: 10 }}>
+        <View style={{ marginRight: 10, flexDirection: "row" }}>
           <Menu
             ref={params.setMenuRef}
             button={<MaterialIcons
               name="filter-list"
               onPress={params.showMenu}
-              style={{ marginRight: 10, color: 'white' }}
+              style={{ marginRight: 8, color: 'white' }}
               size={24}
             />}
           >
             <MenuItem onPress={params.filterAll}><Text style={{ color: colors.backgroundColor }}>All</Text></MenuItem>
             <MenuItem onPress={params.filterFav}><Text style={{ color: colors.backgroundColor }}>Favorites</Text></MenuItem>
           </Menu>
+          <MaterialIcons
+            name="exit-to-app"
+            onPress={params.logout}
+            style={{ marginRight: 4, color: 'white', marginLeft: 8 }}
+            size={24}
+          />
         </View>
       ),
     };

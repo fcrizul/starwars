@@ -6,13 +6,14 @@ import colors from '../theme/Colors';
 export default class MainScreen extends React.Component {
   componentDidMount() {
     auth().onAuthStateChanged(user => {
-      this.props.navigation.replace(user ? 'People' : 'Login')
+      setTimeout(() => { this.props.navigation.replace(user ? 'People' : 'Login'); }, 1000);
     })
   }
 
   static navigationOptions = {
     headerShown: false
   }
+
   render() {
     return (
       <View style={styles.container}>
