@@ -45,7 +45,7 @@ export default class Person extends PureComponent {
           <MaterialIcons
             name="star"
             style={{ marginRight: 16, color: '#ffff00', textAlign: 'right', flex: 1, paddingTop: 16, width: 20 }}
-            size={24}
+            size={18}
           />
           : null}
       </View>

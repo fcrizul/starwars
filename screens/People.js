@@ -125,6 +125,7 @@ export default class PeopleScreen extends React.Component {
               ListFooterComponent={this.listFooter}
               refreshing={this.state.fetching_from_server}
               //extraData={this.state}
+              ItemSeparatorComponent={this.separator}
               ListHeaderComponent={this.listHeader}
             />
           )}
@@ -160,12 +161,24 @@ export default class PeopleScreen extends React.Component {
   listHeader = () => {
     if (!this.state.filter_all) {
       return (
-        <Text style={styles.text_header}>Favoritos</Text>
+        <Text style={styles.text_header}>Favorites</Text>
       )
     }
     else {
       return null;
     }
+  }
+  separator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "100%",
+          backgroundColor: "#CED0CE",
+          opacity: 0.3,
+        }}
+      />
+    );
   }
 }
 
