@@ -8,7 +8,8 @@ export const getFavorites = async () => {
         var fav = []
         var get = await db.once("value", (snapshot) => {
             var tmp = snapshot.val()
-            fav = Object.keys(tmp)
+            if (tmp != null)
+                fav = Object.keys(tmp)
         })
         return fav
     }
