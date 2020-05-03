@@ -3,14 +3,15 @@ import auth from '@react-native-firebase/auth';
 
 export const getFavorites = async () => {
     const user = auth().currentUser;
-    if (user != null){
-        database()
-        .ref('/users/' + user.uid)
-        .once('value')
-        .then(snapshot => {
-            console.log('User data: ', snapshot.val());
-        });
-    }    
+    if (user != null) {
+        var db = await database().ref('/users/' + user.uid + "/fav")
+        var fav = []
+        var get = await db.once("value", (snapshot) => {
+            var tmp = snapshot.val()
+            fav = Object.keys(tmp)
+        })
+        return fav
+    }
 }
 
 export const addFavorite = async (url) => {
@@ -18,12 +19,12 @@ export const addFavorite = async (url) => {
     var id = regexp[1];
 
     const user = auth().currentUser;
-    var json = { };
+    var json = {};
     json[id] = true;
-    if (user != null){
-        var db_fav = await database().ref('/users/' + user.uid+ "/fav")
+    if (user != null) {
+        var db_fav = await database().ref('/users/' + user.uid + "/fav")
         var val = false
-        var add = await db_fav.update(json,error => {
+        var add = await db_fav.update(json, error => {
             val = (error == null)
         })
         return val
@@ -36,8 +37,8 @@ export const delFavorite = async (url) => {
     var id = regexp[1];
 
     const user = auth().currentUser;
-    if (user != null){
-        var db_fav = await database().ref('/users/' + user.uid+ "/fav/"+ id)
+    if (user != null) {
+        var db_fav = await database().ref('/users/' + user.uid + "/fav/" + id)
         var val = false
         var del = await db_fav.remove(error => {
             val = (error == null)
@@ -47,23 +48,23 @@ export const delFavorite = async (url) => {
     return false
 }
 
-export const isFavorite = async (url) =>{
+export const isFavorite = async (url) => {
     let regexp = url.match(".*people/(.+?)/");
     var id = regexp[1];
 
     const user = auth().currentUser;
     try {
-        if (user != null){
+        if (user != null) {
             var db_fav = await database().ref('/users/' + user.uid + "/fav/" + id);
-            var val = false 
-            var fav =  await db_fav.once("value", (snapshot) => {
+            var val = false
+            var fav = await db_fav.once("value", (snapshot) => {
                 val = snapshot.val()
                 if (val == null)
-                    val = false 
+                    val = false
             })
             return val
-        }  
-    }catch(err){
+        }
+    } catch (err) {
         return false
-    }  
+    }
 }

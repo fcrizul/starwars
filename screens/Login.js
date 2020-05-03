@@ -12,8 +12,8 @@ export default class LoginScreen extends React.Component {
       .catch(error => this.setState({ errorMessage: error.message }))
   }
   static navigationOptions = {
-    headerShown : false
-}
+    headerShown: false
+  }
   render() {
     return (
       <View style={styles.container}>

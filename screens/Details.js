@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { View, Text, Image, StyleSheet, ScrollView,ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, ScrollView,ActivityIndicator } from 'react-native'
 import colors from '../theme/Colors';
 import { getPerson} from '../api/swapi'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {isFavorite, addFavorite, delFavorite} from '../api/database'
+import { EventRegister } from 'react-native-event-listeners'
 
 export default class DetailsScreen extends React.Component {
   state = {
@@ -47,7 +48,6 @@ export default class DetailsScreen extends React.Component {
     }))
 
     isFavorite(this.props.navigation.state.params.url).then((fav) =>{
-      console.log("sdsd: " + fav)
       this.setState({
         favorite: (fav == true)
       });
@@ -60,6 +60,7 @@ export default class DetailsScreen extends React.Component {
         this.setState({
           favorite: true
         });
+        EventRegister.emit('refreshFav', this.props.navigation.state.params.url)
       }
     })
   }
@@ -70,6 +71,7 @@ export default class DetailsScreen extends React.Component {
         this.setState({
           favorite: false
         });
+        EventRegister.emit('refreshFav', this.props.navigation.state.params.url)
       }
     })
   }
@@ -79,11 +81,11 @@ export default class DetailsScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-      <ScrollView>
-        {this.state.loading ? (
+      {this.state.loading ? (
           <ActivityIndicator style={styles.loading} size="large" color={colors.fontColor}/>
         ) : (
-        <View style={styles.container}>
+      <ScrollView>
+        <View >
           <View style={{flexDirection:"row",paddingLeft:16, paddingTop:16}}>
             {(this.state.favorite)?(
               <MaterialIcons
@@ -104,19 +106,17 @@ export default class DetailsScreen extends React.Component {
             
             <Text style={styles.title}>{name}</Text>
           </View>
+          {this.row("Gender",gender)}
+          {this.row("Birth date",birth_year)}
+          {this.row("Amount of films",amount_films.length)}
           {this.row("Height",height)}
           {this.row("Mass",mass)}
-          {this.row("hair_color",hair_color)}
-          {this.row("skin_color",skin_color)}
-          {this.row("eye_color",eye_color)}
-          {this.row("birth_year",birth_year)}
-          {this.row("gender",gender)}
-          {this.row("amount_films",amount_films)}
-          {this.row("amount_films",amount_films)}
-          {this.row("amount_films",amount_films)}
+          {this.row("Eyes",eye_color)}
+
         </View>
-      )}
+      
       </ScrollView>
+      )}
       </View>
     );
         }

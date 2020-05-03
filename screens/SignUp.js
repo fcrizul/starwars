@@ -6,15 +6,15 @@ import colors from '../theme/Colors';
 
 export default class SignUpScreen extends React.Component {
   state = { email: '', password: '', errorMessage: null }
-handleSignUp = () => {
-  auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+  handleSignUp = () => {
+    auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('People'))
       .catch(error => this.setState({ errorMessage: error.message }))
-}
-static navigationOptions = {
-  headerShown : false
-}
-render() {
+  }
+  static navigationOptions = {
+    headerShown: false
+  }
+  render() {
     return (
       <View style={styles.container}>
         <Text>Sign Up</Text>

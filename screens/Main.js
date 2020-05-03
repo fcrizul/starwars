@@ -4,20 +4,20 @@ import auth from '@react-native-firebase/auth';
 import colors from '../theme/Colors';
 
 export default class MainScreen extends React.Component {
-    componentDidMount() {
-        auth().onAuthStateChanged(user => {
-            this.props.navigation.replace(user ? 'People' : 'Login')
-        })
-    }
+  componentDidMount() {
+    auth().onAuthStateChanged(user => {
+      this.props.navigation.replace(user ? 'People' : 'Login')
+    })
+  }
 
-    static navigationOptions = {
-      headerShown : false
+  static navigationOptions = {
+    headerShown: false
   }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Loading</Text>
-        <ActivityIndicator size="large" color={colors.fontColor}/>
+        <ActivityIndicator size="large" color={colors.fontColor} />
       </View>
     )
   }
