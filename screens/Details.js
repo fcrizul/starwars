@@ -5,11 +5,13 @@ import { getPerson } from '../api/swapi'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { isFavorite, addFavorite, delFavorite } from '../api/database'
 import { EventRegister } from 'react-native-event-listeners'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class DetailsScreen extends React.Component {
   state = {
     loading: true,
     favorite: false,
+    spinner: false,
 
     name: null,
     height: null,
@@ -55,10 +57,14 @@ export default class DetailsScreen extends React.Component {
   }
 
   addFav = () => {
+    this.setState({
+      spinner: true
+    })
     addFavorite(this.props.navigation.state.params.url).then((add) => {
       if (add) {
         this.setState({
-          favorite: true
+          favorite: true,
+          spinner: false
         });
         EventRegister.emit('refreshFav', this.props.navigation.state.params.url)
       }
@@ -66,10 +72,14 @@ export default class DetailsScreen extends React.Component {
   }
 
   delFav = () => {
+    this.setState({
+      spinner: true
+    })
     delFavorite(this.props.navigation.state.params.url).then((del) => {
       if (del) {
         this.setState({
-          favorite: false
+          favorite: false,
+          spinner: false
         });
         EventRegister.emit('refreshFav', this.props.navigation.state.params.url)
       }
@@ -81,6 +91,12 @@ export default class DetailsScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Spinner
+          visible={this.state.spinner}
+          textContent={'Loading...'}
+          color={colors.accentColor}
+          overlayColor={colors.overlayColor}
+        />
         {this.state.loading ? (
           <ActivityIndicator style={styles.loading} size="large" color={colors.fontColor} />
         ) : (
