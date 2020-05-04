@@ -4,6 +4,7 @@ import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import auth from '@react-native-firebase/auth';
 import colors from '../theme/Colors';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Snackbar from 'react-native-snackbar';
 
 export default class SignUpScreen extends React.Component {
   state = {
@@ -19,8 +20,26 @@ export default class SignUpScreen extends React.Component {
         spinner: true
       })
       auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(() => this.props.navigation.replace('Main'))
-        .catch(error => this.setState({ errorMessage: error.message, spinner: false }))
+        .then(() => {
+          Snackbar.dismiss()
+          this.props.navigation.replace('Main')
+        })
+        .catch(error => {
+          this.setState({ spinner: false })
+          setTimeout(() => {
+            Snackbar.show({
+              text: error.message,
+              backgroundColor: "#FF0000",
+              duration: Snackbar.LENGTH_INDEFINITE,
+              action: {
+                text: 'OK',
+                textColor: 'white'
+              }
+            });
+          }, 500);
+
+        }
+        )
     }
   }
   static navigationOptions = {
@@ -35,7 +54,7 @@ export default class SignUpScreen extends React.Component {
           color={colors.accentColor}
           overlayColor={colors.overlayColor}
         />
-        <Text>Sign Up</Text>
+        <Text style={styles.text}>Sign Up</Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
             {this.state.errorMessage}
@@ -57,10 +76,13 @@ export default class SignUpScreen extends React.Component {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
+        <View style={{ margin: 16, marginBottom: 36 }}>
+          <Button title="Sign Up" onPress={this.handleSignUp} />
+        </View>
         <Button
           title="Already have an account? Login"
           onPress={() => this.props.navigation.replace('Login')}
+          color="grey"
         />
       </View>
     )
@@ -78,7 +100,11 @@ const styles = StyleSheet.create({
     width: '90%',
     borderColor: 'gray',
     borderWidth: 1,
-    marginTop: 8,
+    marginTop: 16,
     color: colors.fontColor,
+  },
+  text: {
+    color: colors.fontColor,
+    fontSize: 28
   }
 })
