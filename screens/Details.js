@@ -56,6 +56,13 @@ export default class DetailsScreen extends React.Component {
     })
   }
 
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+    return {
+      headerTintColor: '#ffffff'
+    };
+  };
+
   addFav = () => {
     this.setState({
       spinner: true
