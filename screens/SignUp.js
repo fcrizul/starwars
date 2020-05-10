@@ -25,19 +25,20 @@ export default class SignUpScreen extends React.Component {
           this.props.navigation.replace('Main')
         })
         .catch(error => {
-          this.setState({ spinner: false })
-          setTimeout(() => {
-            Snackbar.show({
-              text: error.message,
-              backgroundColor: "#FF0000",
-              duration: Snackbar.LENGTH_INDEFINITE,
-              action: {
-                text: 'OK',
-                textColor: 'white'
-              }
-            });
-          }, 500);
-
+          this.setState({ spinner: false }, () => {
+            //https://www.npmjs.com/package/react-native-loading-spinner-overlay
+            setTimeout(() => {
+              Snackbar.show({
+                text: error.message,
+                backgroundColor: "#FF0000",
+                duration: Snackbar.LENGTH_INDEFINITE,
+                action: {
+                  text: 'OK',
+                  textColor: 'white'
+                }
+              });
+            }, 100);
+          })
         }
         )
     }

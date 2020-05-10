@@ -19,12 +19,14 @@ export default class PeopleScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ setMenuRef: this.setMenuRef })
-    this.props.navigation.setParams({ hideMenu: this.hideMenu })
-    this.props.navigation.setParams({ showMenu: this.showMenu })
-    this.props.navigation.setParams({ logout: this.logout })
-    this.props.navigation.setParams({ filterAll: this.filterAll })
-    this.props.navigation.setParams({ filterFav: this.filterFav })
+    this.props.navigation.setParams({ 
+      setMenuRef: this.setMenuRef,
+      hideMenu: this.hideMenu,
+      showMenu: this.showMenu,
+      logout: this.logout,
+      filterAll: this.filterAll,
+      filterFav: this.filterFav
+    })
 
     getPeople().then(response => this.setState({
       people: response.results,
